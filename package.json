@@ -1,0 +1,16 @@
+{
+  "name": "weather-app",
+  "version": "1.0.0",
+  "description": "it is for weather App.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "author": "Muklesh",
+  "license": "ISC",
+  "dependencies": {
+    "cucumber": "^6.0.7",
+    "requests": "^0.3.0"
+  }
+}

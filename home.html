@@ -1,0 +1,453 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    
+    <title>Weather App</title>
+    <style>
+        body{
+    min-height: 120vh;
+    margin-top: 0rem !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(238, 237, 237, 0.33);
+    color: rgb(105, 104, 104);
+    font-family: sans-serif;
+}
+.container{
+    height: 80vh;
+    background-image: linear-gradient(to right top, #50a39e, #50b0ac, #50bdba, #4fcbc9, #4dd8d8);
+    background-color: #ffffff;
+    border-color: #ffffff;
+    align-items: center;
+    border-radius: 1rem;
+    vertical-align: middle;
+}
+@media(max-width:767px)
+{
+    .container{
+        height: fit-content;
+    }
+}
+.weather
+{
+    width: 100%;
+}
+@media(max-width:767px){
+    .weather
+    {
+        width: 100%;
+    }   
+}
+.card{
+    
+    padding: 1rem;
+    margin: 1.5rem 4vw;
+    border-radius: 1rem;
+    color: black !important;
+    word-wrap: unset !important;
+    /* background-color: rgba(238, 237, 237, 0.22); */
+    border-color: rgba(238, 237, 237, 0.22);
+    box-shadow: 5px 6px 6px 2px #e9ecef;
+    text-align: center;
+}
+@media(max-width:768px){
+    .card{
+        margin: 1.5rem;
+    }
+}
+.title{
+    justify-content: center;
+    position: absolute;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%)
+}
+.title p{
+    margin-bottom: 0.2rem;
+    font-size: 1.2rem;
+}
+.temp{
+    font-size: 2.6rem;
+    margin-bottom: 1rem;
+}
+.header{
+    color: #dddddd;
+}
+.col-4{
+    padding: 0 0.2rem;
+}
+.icon{
+    align-self: flex-end;
+    margin-right: -2.5rem;
+    margin-top: -2rem;
+    z-index: 999;
+}
+.icon img{
+    width: 5rem;
+}
+.search-bar {
+  display: flex;
+}
+button, input {
+  font: 1em Hind, sans-serif;
+  line-height: 1.5em;
+}
+input {
+  color: #171717;
+}
+.search-bar input,
+.search-btn, 
+.search-btn:before, 
+.search-btn:after {
+  transition: all 0.25s ease-out;
+}
+.search-bar input,
+.search-btn {
+  width: 3em;
+  height: 3em;
+}
+.search-bar input:invalid:not(:focus),
+.search-btn {
+  cursor: pointer;
+}
+.search-bar,
+.search-bar input:focus,
+.search-bar input:valid  {
+  width: 100%;
+}
+.search-bar input:focus,
+.search-bar input:not(:focus) + .search-btn:focus {
+  outline: transparent;
+}
+.search-bar {
+  
+  padding-top: .8em;
+  justify-content: center;
+  max-width: 20em;
+}
+.search-bar input {
+  background: transparent;
+  border-radius: 1.5em;
+  box-shadow: 0 0 0 0.4em #171717 inset;
+  padding: 0.75em;
+  transform: translate(0.5em,0.5em) scale(0.5);
+  transform-origin: 100% 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+.search-bar input::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+.search-bar input:focus,
+.search-bar input:valid {
+  background: #fff;
+  border-radius: 0.375em 0 0 0.375em;
+  box-shadow: 0 0 0 0.1em #d9d9d9 inset;
+  transform: scale(1);
+}
+.search-btn {
+  background: #171717;
+  border-radius: 0 0.75em 0.75em 0 / 0 1.5em 1.5em 0;
+  padding: 0.75em;
+  position: relative;
+  transform: translate(0.25em,0.25em) rotate(45deg) scale(0.25,0.125);
+  transform-origin: 0 50%;
+}
+.search-btn:before, 
+.search-btn:after {
+  content: "";
+  display: block;
+  opacity: 0;
+  position: absolute;
+}
+.search-btn:before {
+  border-radius: 50%;
+  box-shadow: 0 0 0 0.2em #f1f1f1 inset;
+  top: 0.75em;
+  left: 0.75em;
+  width: 1.2em;
+  height: 1.2em;
+}
+.search-btn:after {
+  background: #f1f1f1;
+  border-radius: 0 0.25em 0.25em 0;
+  top: 51%;
+  left: 51%;
+  width: 0.75em;
+  height: 0.25em;
+  transform: translate(0.2em,0) rotate(45deg);
+  transform-origin: 0 50%;
+}
+.search-btn span {
+  display: inline-block;
+  overflow: hidden;
+  width: 1px;
+  height: 1px;
+}
+
+/* Active state */
+.search-bar input:focus + .search-btn,
+.search-bar input:valid + .search-btn {
+  background: #2762f3;
+  border-radius: 0 0.375em 0.375em 0;
+  transform: scale(1);
+}
+.search-bar input:focus + .search-btn:before, 
+.search-bar input:focus + .search-btn:after,
+.search-bar input:valid + .search-btn:before, 
+.search-bar input:valid + .search-btn:after {
+  opacity: 1;
+}
+.search-bar input:focus + .search-btn:hover,
+.search-bar input:valid + .search-btn:hover,
+.search-bar input:valid:not(:focus) + .search-btn:focus {
+  background: #0c48db;
+}
+.search-bar input:focus + .search-btn:active,
+.search-bar input:valid + .search-btn:active {
+  transform: translateY(1px);
+}
+
+@media screen and (prefers-color-scheme: dark) {
+  body, input {
+    color: #f1f1f1;
+  }
+ 
+  .search-bar input {
+    box-shadow: 0 0 0 0.4em #f1f1f1 inset;
+  }
+  .search-bar input:focus,
+  .search-bar input:valid {
+    background: #3d3d3d;
+    box-shadow: 0 0 0 0.1em #3d3d3d inset;
+  }
+  .search-btn {
+    background: #f1f1f1;
+  }
+}
+@media (max-width: 767px){
+.container {
+    height: fit-content;
+    margin-top: 4rem !important;
+}
+#ct{
+    font-size: small !important;
+}
+}
+    </style>
+    <script type="text/javascript"> 
+        function display_c(){
+        var refresh=1000; // Refresh rate in milli seconds
+        mytime=setTimeout('display_ct()',refresh)
+        }
+        function display_ct() {
+        var x = new Date()
+        document.getElementById('ct').innerHTML = x;
+        display_c();
+        }
+        </script>
+</head>
+<body onload=display_ct();>
+    <div class="container d-flex justify-content-center">
+        <div class="weather">
+            <div class="d-flex align-items-center justify-content-center" style="padding: .5rem;margin: 1.5rem 4vw;
+                border-radius: 1rem;
+                background-color: rgba(238, 237, 237, 0.22);
+                border-color: rgba(238, 237, 237, 0.22);
+                box-shadow: 5px 6px 6px 2px #e9ecef;
+                text-align: center;
+                margin-top: -3rem;background-image: linear-gradient(to right top, #21f2e8, #23cbc8, #28a4a7, #2a8084, #295d62);">
+                <p id="ct" style="color: #fff;font-weight: 900; margin-top: 1rem;"></p>
+                
+                <form action="" class="search-bar">
+                    <input type="search" id="cityName" name="search" pattern=".*\S.*" required placeholder="Search City For Weather!">
+                    <button class="search-btn" id="serbtn" type="submit">
+                      <span>Search</span>
+                    </button>
+                  </form>
+                  <p id="sapn"></p>
+            </div>
+            
+            <div class="row">
+                <div class=" col-md-6"> 
+                    <div class="card">
+                        <span class="icon"><img class="img-fluid"  src="{%img%}"/></span>
+                        <div class="title"><p>{%city%}</p></div>
+                        <div class="temp">{%tempval%}<sup>&deg;</sup></div>
+                            <div class="row">
+                                <div class="col-4">
+                                    <div class="header">Status</div>
+                                    <div class="value">{%status%}</div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="header">Temp_Max.</div>
+                                    <div class="value">{%temp_max%}</div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="header">Temp_Min.</div>
+                                    <div class="value">{%tem_min%}</div>
+                                </div>
+                            </div>
+                            
+                    </div>
+                </div>
+                <div class="col-md-6">
+                
+                    <div class="card">
+                        <span class="icon"><img class="img-fluid" id="image" src="https://img.icons8.com/emoji/96/000000/sun-emoji.png"/></span>
+                        <div class="title" id="city1"><p></p></div>
+                        <div class="temp" id="temp">+18<sup>&deg;</sup></div>
+                            <div class="row">
+                                <div class="col-4">
+                                    <div class="header">Status</div>
+                                    <div class="value" id="status">Sunny</div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="header">Temp_Max</div>
+                                    <div class="value" id="temp_max">20</div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="header">Temp_Min</div>
+                                    <div class="value" id="temp_min">No</div>
+                                </div>
+                            </div>                            
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <span class="icon"><img class="img-fluid"  src="{%img1%}"/></span>
+                        <div class="title" ><p>{%cloud%}</p></div>
+                        <div class="temp" >{%cloud_des%}<sup>&deg;</sup></div>
+                            <div class="row">
+                                <div class="col-4">
+                                    <div class="header">Humidity</div>
+                                    <div class="value" >{%humidity%}</div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="header">Sunrise</div>
+                                    <div class="value">{%sunrise%}</div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="header">Sunset</div>
+                                    <div class="value">{%sunset%}</div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <v class="card">
+                        <span class="icon"><img id="image1" src="https://img.icons8.com/office/80/000000/partly-cloudy-day.png"/></span>
+                        <div class="title"  id="cloud"><p>Darvin</p></div>
+                        <div class="temp" id="cloud_des">Broken rain<sup>&deg;</sup></div>
+                            <div class="row">
+                                <div class="col-4">
+                                    <div class="header">Humidity</div>
+                                    <div class="value" id="humidity">100</div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="header">Sunrise</div>
+                                    <div class="value" id="sunrise">34</div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="header">Sunset</div>
+                                    <div class="value" id="sunset">No</div>
+                                </div>
+                            </div> 
+                    </div>
+                </div>
+            </div>
+        </div>
+            
+    </div>
+</body>
+<script>
+    const currdate =  document.getElementById("date");
+    const button = document.getElementById("serbtn");
+    const cityname = document.getElementById("cityName");
+    const s = document.getElementById("span");
+
+    const city = document.getElementById("city1");
+    const temp = document.getElementById("temp");
+    const status = document.getElementById("status");
+    const temp_max = document.getElementById("temp_max");
+    const temp_min = document.getElementById("temp_min");
+
+    const cloud = document.getElementById("cloud");
+    const cloud_des = document.getElementById("cloud_des");
+    const humidity = document.getElementById("humidity");
+    const sunrise = document.getElementById("sunrise");
+    const sunset = document.getElementById("sunset");
+
+    const tempStatus = "cloud";
+
+    const getInfo = async(event) => {
+        event.preventDefault();
+        let cityVal = cityname.value;
+        //alert(cityVal);
+        if(cityVal == ""){
+            s.innerText = 'Plz write the name before Search!';
+        }
+        else{
+            try{
+                let url = `https://api.openweathermap.org/data/2.5/weather?q=${cityVal}&appid=9a9e8a7fe55d06de7ef2ac31a40d38a7`;
+                const response = await fetch(url);
+                const data = await response.json();
+                const arrData = [data];
+                city.innerText = arrData[0].name;
+                const tempe = (arrData[0].main.temp)-273.15;
+                temp.innerText = tempe.toFixed(2);
+                status.innerText = arrData[0].weather[0].main;
+                const tempMax = (arrData[0].main.temp_max)-273.15;
+                temp_max.innerText = tempMax.toFixed(2);
+                const tempMin = (arrData[0].main.temp_min)-273.15;
+                temp_min.innerText = tempMin.toFixed(2);
+
+                cloud.innerText = arrData[0].weather[0].main;
+                cloud_des.innerText = arrData[0].weather[0].description;
+                humidity.innerText = arrData[0].main.humidity;
+
+                var sunrise_time = arrData[0].sys.sunrise;
+                var date = new Date(sunrise_time * 1000);
+                var timestr = date.toLocaleTimeString();
+                sunrise.innerText = timestr;
+
+                var sunset_time = arrData[0].sys.sunset;
+                var date1 = new Date(sunset_time * 1000);
+                var timestr1 = date1.toLocaleTimeString();
+                sunset.innerText = timestr1;
+
+                // for image
+                const imgStatus = arrData[0].weather[0].main;
+                if(imgStatus == "Clouds"){
+                    document.getElementById("image").src="https://img.icons8.com/office/80/000000/partly-cloudy-day.png";
+                }
+                if(imgStatus == "Rain") {
+                    document.getElementById("image").src="https://www.freeiconspng.com/uploads/cloud-rain-icon-2.png";
+                }
+                // else{
+                //     document.getElementById("image").src="https://img.icons8.com/emoji/96/000000/sun-emoji.png";
+                // }
+                if(imgStatus == "Clouds"){
+                    document.getElementById("image1").src="https://img.icons8.com/office/80/000000/partly-cloudy-day.png";
+                }
+                if(imgStatus == "Rain") {
+                    document.getElementById("image1").src="https://www.freeiconspng.com/uploads/cloud-rain-icon-2.png";
+                }
+                //console.log(city.innerText = arrData[0].weather[0].main);
+            }
+            catch{
+                s.innerText = 'Plz write the name before Search!';
+            }
+        }
+    }
+    button.addEventListener('click',getInfo);
+
+</script>
+</html>
